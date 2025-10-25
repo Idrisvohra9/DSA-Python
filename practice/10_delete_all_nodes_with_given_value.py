@@ -7,29 +7,16 @@ class ListNode:
 
 
 def delete_nodes_with_value(head, val) -> ListNode:
-    # Handle case where head nodes need to be deleted
-    while head and head.val == val:
-        head = head.next
-
-    # If all nodes were deleted
-    if not head:
-        return None
-
-    # Process the rest of the list
-    current = head
-    # current.next = current.next.next does not raise AttributeError because:
-
-    # Before this line runs, the loop condition while current.next: ensures that current.next is not None.
-
-    # So current.next.next safely accesses the .next of a valid node (which may be None, but assigning None is valid).
+    # This satisfies the edge case where we might need to delete the head node:
+    dummy = ListNode(0)
+    dummy.next = head
+    current = dummy
     while current.next:
         if current.next.val == val:
-            current.next = current.next.next  # Skip the node with target value
+            current.next = current.next.next
         else:
-            current = current.next  # Move to next node only if we didn't delete
-
-    return head
-
+            current = current.next
+    return dummy.next
 
 def print_list(head) -> list:
     """Helper function to print the linked list."""

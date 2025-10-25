@@ -15,4 +15,4 @@ def zigzag_conversion(s, num_rows):
         row_num += 1 if go_down else -1
     return "".join(rows)
 
-print(zigzag_conversion("PAYPALISHIRING", 3))
+print(zigzag_conversion("PAYPALISHIRING", 5))
