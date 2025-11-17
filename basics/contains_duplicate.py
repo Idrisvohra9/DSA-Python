@@ -8,8 +8,9 @@ class Solution:
             seen.add(num)
         return False
 
+
 # Example usage:
-nums = [1,2,3,1]
+nums = [1, 2, 3, 1]
 
 print(Solution().containsDuplicate(nums))  # Output: True
 
