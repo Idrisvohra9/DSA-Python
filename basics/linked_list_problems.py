@@ -443,6 +443,76 @@ def copy_random_list(head):
     return dummy.next
 
 # ============================================================================
+# PROBLEM 11: REMOVE DUPLICATES FROM SORTED LIST
+# ============================================================================
+def delete_duplicates(head):
+    """
+    Problem: Remove duplicates from a sorted linked list.
+    
+    Given the head of a sorted linked list, delete all duplicates such that 
+    each element appears only once. Return the linked list sorted as well.
+    
+    Approach: Single pass with current pointer
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    
+    Example: 1->1->2->3->3 becomes 1->2->3
+    """
+    if not head or not head.next:
+        return head
+    
+    current = head
+    
+    # Traverse the list and remove duplicates
+    while current and current.next:
+        if current.val == current.next.val:
+            # Skip the duplicate node
+            current.next = current.next.next
+        else:
+            # Move to next node only if no duplicate found
+            current = current.next
+    
+    return head
+
+def delete_all_duplicates(head):
+    """
+    Problem: Remove ALL duplicates from sorted list (including original).
+    
+    Given a sorted linked list, delete all nodes that have duplicate numbers,
+    leaving only distinct numbers from the original list.
+    
+    Approach: Use dummy node and track previous node
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    
+    Example: 1->2->3->3->4->4->5 becomes 1->2->5
+    """
+    if not head or not head.next:
+        return head
+    
+    # Use dummy node to handle edge cases
+    dummy = ListNode(0)
+    dummy.next = head
+    prev = dummy
+    current = head
+    
+    while current:
+        # Check if current node has duplicates
+        if current.next and current.val == current.next.val:
+            # Skip all nodes with same value
+            val = current.val
+            while current and current.val == val:
+                current = current.next
+            # Connect previous to current (after duplicates)
+            prev.next = current
+        else:
+            # No duplicate, move previous pointer
+            prev = current
+            current = current.next
+    
+    return dummy.next
+
+# ============================================================================
 # TEST FUNCTIONS
 # ============================================================================
 def test_linked_list_problems():
@@ -503,6 +573,30 @@ def test_linked_list_problems():
     head5.next.next.next = ListNode(1)
     print(f"List: {print_list(head5)}")
     print(f"Is palindrome: {is_palindrome(head5)}")
+    
+    # Test 6: Remove Duplicates from Sorted List
+    print("\n6. REMOVE DUPLICATES FROM SORTED LIST")
+    head6 = ListNode(1)
+    head6.next = ListNode(1)
+    head6.next.next = ListNode(2)
+    head6.next.next.next = ListNode(3)
+    head6.next.next.next.next = ListNode(3)
+    print(f"Original: {print_list(head6)}")
+    deduplicated = delete_duplicates(head6)
+    print(f"After removing duplicates: {print_list(deduplicated)}")
+    
+    # Test 7: Remove ALL Duplicates from Sorted List
+    print("\n7. REMOVE ALL DUPLICATES FROM SORTED LIST")
+    head7 = ListNode(1)
+    head7.next = ListNode(2)
+    head7.next.next = ListNode(3)
+    head7.next.next.next = ListNode(3)
+    head7.next.next.next.next = ListNode(4)
+    head7.next.next.next.next.next = ListNode(4)
+    head7.next.next.next.next.next.next = ListNode(5)
+    print(f"Original: {print_list(head7)}")
+    all_deduplicated = delete_all_duplicates(head7)
+    print(f"After removing all duplicates: {print_list(all_deduplicated)}")
 
 if __name__ == "__main__":
     test_linked_list_problems()
